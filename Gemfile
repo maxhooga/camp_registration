@@ -54,4 +54,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  # Rails 7.2 is not compatible with Minitest 6.
+  gem "minitest", "~> 5.25"
 end

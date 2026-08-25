@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_08_24_200001) do
+ActiveRecord::Schema[7.2].define(version: 2026_08_25_183001) do
   create_table "camps", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.integer "capacity", null: false
@@ -18,15 +18,16 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_24_200001) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "stays", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "reservations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "camp_id", null: false
-    t.string "guest_name", null: false
+    t.string "name", null: false
+    t.integer "amount", null: false
     t.date "start_date", null: false
     t.date "end_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["camp_id"], name: "index_stays_on_camp_id"
+    t.index ["camp_id", "start_date", "end_date"], name: "index_reservations_on_camp_id_and_start_date_and_end_date"
   end
 
-  add_foreign_key "stays", "camps"
+  add_foreign_key "reservations", "camps"
 end
