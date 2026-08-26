@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   root "camps#index"
 
   resources :camps do
-    get :occupancy_timeline, on: :member
     resources :reservations, only: %i[new create]
   end
 
