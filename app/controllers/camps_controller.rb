@@ -15,11 +15,8 @@ class CampsController < ApplicationController
   def show
     @camp = Camp.find(params[:id])
     @reservations = @camp.reservations.order(:start_date)
-    from = Date.current.beginning_of_month
-    to = from.next_month
-    @occupancy_timeline = @camp.occupancy_timeline(
-      @camp.reservations.where("start_date < ? AND end_date > ?", to, from)
-    )
+    @month_start = (params[:month]&.to_date || Date.current).beginning_of_month
+    @calendar_weeks = @camp.calendar_weeks(@month_start)
   end
 
   def new
