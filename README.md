@@ -37,7 +37,7 @@ Seednutý **Pine Ridge** má kapacitu 10. Překrývající se rodiny už na něk
 
 - **Dva modely:** `Camp has_many :reservations`. Kapacita patří kempu; rezervace drží jen kdo přijíždí, kolik lidí a termín. User model není — zadání auth nepožaduje.
 - **`amount` místo počítání řádků:** rodina o 4 lidech zabere 4 z kapacity kempu. Příklad ze zadání („bazén rezervovaný max. 10 osobami“) je o lidech, ne o počtu záznamů.
-- **Půlotevřený interval `[start_date, end_date)`:** den odjezdu místo nezabírá. Tak to v kempech funguje a dvě skupiny se můžou vystřídat v jeden den, aniž by se „srazily“.
+- **Půlotevřený interval `[start_date, end_date)`:** den odjezdu místo nezabírá. Tak to v kempech funguje a dvě skupiny se můžou vystřídat v jeden den, aniž by se „srazily“. Stejný den (`end_date == start_date`) by zabral 0 nocí, proto musí být `end_date` ostře po `start_date`.
 - **Autorita je validace na rezervaci:** `Reservation#fits_camp_capacity` běží při create i update. Frontend ani kalendář rezervaci neuloží — `save` to stejně zastaví.
 - **Sweep-line je v `Occupancy`:** validace i kalendář volají stejnou metodu. Camp k bodům jen doplní `full` (`current >= capacity`).
 - **Kalendář jen zobrazuje:** na camp show se z timeline vykreslí měsíční mřížka. Neukládá data, jen ukazuje, které dny už kapacitu drží.
@@ -49,7 +49,7 @@ Každá rezervace se změní na dvě události: `+amount` v `start_date` a `-amo
 
 ## Co bych udělal s více času
 
-Zamknout řádek kempu (nebo exclusion constraint), aby dva souběžné requesty neprošly kontrolou oba. Validace `end_date > start_date` a zákaz snížit kapacitu kempu pod aktuální obsazenost. Request testy na controllery.
+Zamknout řádek kempu (nebo exclusion constraint), aby dva souběžné requesty neprošly kontrolou oba. Zákaz snížit kapacitu kempu pod aktuální obsazenost. Request testy na controllery.
 
 ## Testy
 

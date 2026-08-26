@@ -108,4 +108,24 @@ class ReservationTest < ActiveSupport::TestCase
 
     assert reservation.save
   end
+
+  test "rejects a stay that ends on or before it starts" do
+    same_day = @camp.reservations.new(
+      name: "Day trip",
+      amount: 1,
+      start_date: Date.new(2026, 8, 1),
+      end_date: Date.new(2026, 8, 1)
+    )
+    backwards = @camp.reservations.new(
+      name: "Backwards",
+      amount: 1,
+      start_date: Date.new(2026, 8, 5),
+      end_date: Date.new(2026, 8, 1)
+    )
+
+    assert_not same_day.save
+    assert_includes same_day.errors[:end_date], "must be after start date"
+    assert_not backwards.save
+    assert_includes backwards.errors[:end_date], "must be after start date"
+  end
 end
