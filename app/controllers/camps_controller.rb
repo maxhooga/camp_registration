@@ -3,15 +3,6 @@ class CampsController < ApplicationController
     @camps = Camp.order(:name).includes(:reservations)
   end
 
-  def occupancy_timeline
-    camp = Camp.find(params[:id])
-    from = params[:from]&.to_date || Date.current.beginning_of_month
-    to = params[:to]&.to_date || from.next_month
-
-    intervals = camp.reservations.where("start_date < ? AND end_date > ?", to, from)
-    render json: camp.occupancy_timeline(intervals)
-  end
-
   def show
     @camp = Camp.find(params[:id])
     @reservations = @camp.reservations.order(:start_date)

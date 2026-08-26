@@ -5,19 +5,8 @@ class Camp < ApplicationRecord
   validates :capacity, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
   def occupancy_timeline(intervals)
-    events = intervals.flat_map do |r|
-      [[r.start_date, r.amount], [r.end_date, -r.amount]]
-    end
-    events.sort_by! { |date, delta| [date, delta] }
-
-    current = 0
-    events.map do |date, delta|
-      current += delta
-      {
-        date: date,
-        current: current,
-        full: current >= capacity
-      }
+    Occupancy.timeline(intervals).map do |point|
+      point.merge(full: point[:current] >= capacity)
     end
   end
 
