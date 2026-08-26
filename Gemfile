@@ -55,5 +55,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   # Rails 7.2 is not compatible with Minitest 6.
-  gem "minitest", "~> 5.25"
+  gem "minitest", "~> 6.0"
 end
