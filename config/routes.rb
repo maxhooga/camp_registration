@@ -5,9 +5,10 @@ Rails.application.routes.draw do
 
   root "camps#index"
 
-  resources :camps, only: %i[index show new create] do
+  resources :camps do
+    get :occupancy_timeline, on: :member
     resources :reservations, only: %i[new create]
   end
 
-  resources :reservations, only: %i[show edit update]
+  resources :reservations, only: %i[index show edit update destroy]
 end

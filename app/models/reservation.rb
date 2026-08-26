@@ -1,5 +1,10 @@
 class Reservation < ApplicationRecord
   belongs_to :camp
+
+  validates :name, presence: true
+  validates :amount, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :start_date, presence: true
+  validates :end_date, presence: true
   validate :fits_camp_capacity
 
   private

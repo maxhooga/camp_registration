@@ -1,0 +1,7 @@
+<% content_for :title, "New reservation" %>
+
+<h1>New reservation at <%= @camp.name %></h1>
+
+<%= render "form", reservation: @reservation %>
+
+<p><%= link_to "Back", @camp %></p>

@@ -1,0 +1,25 @@
+<%= form_with model: camp do |form| %>
+  <% if camp.errors.any? %>
+    <div class="form-errors">
+      <ul>
+        <% camp.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :capacity %>
+    <%= form.number_field :capacity, min: 1 %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

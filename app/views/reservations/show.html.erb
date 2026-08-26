@@ -1,0 +1,22 @@
+<% content_for :title, @reservation.name %>
+
+<h1><%= @reservation.name %></h1>
+
+<dl>
+  <dt>Camp</dt>
+  <dd><%= link_to @reservation.camp.name, @reservation.camp %></dd>
+  <dt>People</dt>
+  <dd><%= @reservation.amount %></dd>
+  <dt>From</dt>
+  <dd><%= @reservation.start_date %></dd>
+  <dt>To</dt>
+  <dd><%= @reservation.end_date %></dd>
+</dl>
+
+<p>
+  <%= link_to "Edit", edit_reservation_path(@reservation) %>
+  ·
+  <%= link_to "Back to camp", @reservation.camp %>
+</p>
+
+<%= button_to "Delete", @reservation, method: :delete, form: { data: { turbo_confirm: "Delete this reservation?" } } %>

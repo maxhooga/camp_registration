@@ -3,9 +3,23 @@ class CampsController < ApplicationController
     @camps = Camp.order(:name).includes(:reservations)
   end
 
+  def occupancy_timeline
+    camp = Camp.find(params[:id])
+    from = params[:from]&.to_date || Date.current.beginning_of_month
+    to = params[:to]&.to_date || from.next_month
+
+    intervals = camp.reservations.where("start_date < ? AND end_date > ?", to, from)
+    render json: camp.occupancy_timeline(intervals)
+  end
+
   def show
     @camp = Camp.find(params[:id])
     @reservations = @camp.reservations.order(:start_date)
+    from = Date.current.beginning_of_month
+    to = from.next_month
+    @occupancy_timeline = @camp.occupancy_timeline(
+      @camp.reservations.where("start_date < ? AND end_date > ?", to, from)
+    )
   end
 
   def new
@@ -16,10 +30,29 @@ class CampsController < ApplicationController
     @camp = Camp.new(camp_params)
 
     if @camp.save
-      redirect_to @camp
+      redirect_to @camp, notice: "Camp created."
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def edit
+    @camp = Camp.find(params[:id])
+  end
+
+  def update
+    @camp = Camp.find(params[:id])
+
+    if @camp.update(camp_params)
+      redirect_to @camp, notice: "Camp updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    Camp.find(params[:id]).destroy
+    redirect_to camps_path, notice: "Camp deleted."
   end
 
   private

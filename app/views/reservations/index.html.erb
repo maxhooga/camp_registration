@@ -1,0 +1,37 @@
+<% content_for :title, "Reservations" %>
+
+<h1>Reservations</h1>
+
+<p><%= link_to "Camps", camps_path %></p>
+
+<% if @reservations.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Camp</th>
+        <th>People</th>
+        <th>From</th>
+        <th>To</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reservations.each do |reservation| %>
+        <tr>
+          <td><%= link_to reservation.name, reservation %></td>
+          <td><%= link_to reservation.camp.name, reservation.camp %></td>
+          <td><%= reservation.amount %></td>
+          <td><%= reservation.start_date %></td>
+          <td><%= reservation.end_date %></td>
+          <td>
+            <%= link_to "Edit", edit_reservation_path(reservation) %>
+            <%= button_to "Delete", reservation, method: :delete, form: { data: { turbo_confirm: "Delete this reservation?" } } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No reservations yet. Create one from a camp page.</p>
+<% end %>

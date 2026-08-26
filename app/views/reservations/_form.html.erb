@@ -1,0 +1,35 @@
+<%= form_with model: reservation.persisted? ? reservation : [reservation.camp, reservation] do |form| %>
+  <% if reservation.errors.any? %>
+    <div class="form-errors">
+      <ul>
+        <% reservation.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :amount %>
+    <%= form.number_field :amount, min: 1 %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :start_date %>
+    <%= form.date_field :start_date %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :end_date %>
+    <%= form.date_field :end_date %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

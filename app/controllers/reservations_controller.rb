@@ -1,4 +1,8 @@
 class ReservationsController < ApplicationController
+  def index
+    @reservations = Reservation.includes(:camp).order(:start_date, :name)
+  end
+
   def show
     @reservation = Reservation.find(params[:id])
   end
@@ -13,7 +17,7 @@ class ReservationsController < ApplicationController
     @reservation = @camp.reservations.build(reservation_params)
 
     if @reservation.save
-      redirect_to @camp
+      redirect_to @camp, notice: "Reservation created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,10 +31,17 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.find(params[:id])
 
     if @reservation.update(reservation_params)
-      redirect_to @reservation.camp
+      redirect_to @reservation, notice: "Reservation updated."
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    reservation = Reservation.find(params[:id])
+    camp = reservation.camp
+    reservation.destroy
+    redirect_to camp, notice: "Reservation deleted."
   end
 
   private
