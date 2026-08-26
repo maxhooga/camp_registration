@@ -1,0 +1,56 @@
+.calendar table {
+  table-layout: fixed;
+}
+
+.calendar th,
+.calendar td {
+  width: 14.28%;
+  height: 4.2rem;
+  vertical-align: top;
+  border: 1px solid #e5e7eb;
+}
+
+.calendar td.is-empty {
+  background: #f9fafb;
+  border-color: #f3f4f6;
+}
+
+.calendar td.is-full {
+  background: #fee2e2;
+}
+
+.calendar .day {
+  display: block;
+  font-weight: 600;
+}
+
+.calendar .occ {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.calendar-nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.calendar-legend {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.calendar-legend .swatch {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.calendar-legend .swatch.is-full {
+  background: #fee2e2;
+  border-color: #fecaca;
+}
